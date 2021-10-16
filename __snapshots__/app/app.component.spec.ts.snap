@@ -4,6 +4,23 @@ exports[`AppComponent should match snapshot 1`] = `
 <div
   id="root0"
 >
-  <router-outlet />
+  <app-main-layout>
+    <div
+      class="flex flex-col mb-4"
+      heading=""
+    >
+      <h1
+        class="text-xl font-semibold mb-2"
+      >
+        Testing
+      </h1>
+      <p>
+        All messages will be deleted at every 00:00 UTC
+      </p>
+    </div>
+    <router-outlet
+      content=""
+    />
+  </app-main-layout>
 </div>
 `;
