@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
-  template: ` <div>{{ title }}</div> `,
+  template: ` <div class="bg-red-300">{{ title }}</div> `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
