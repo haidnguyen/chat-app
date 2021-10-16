@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppComponent should match snapshot 1`] = `
+<div
+  id="root0"
+>
+  <div>
+    chat-app
+  </div>
+</div>
+`;
