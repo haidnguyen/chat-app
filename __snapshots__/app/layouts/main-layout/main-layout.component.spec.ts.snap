@@ -19,7 +19,7 @@ exports[`MainLayoutComponent should match snapshot 1`] = `
           </h1>
         </section>
         <div
-          class="flex-grow"
+          class="flex-grow flex flex-col"
         >
           <div
             content=""

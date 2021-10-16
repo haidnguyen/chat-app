@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ChannelSwitcherComponent should match snapshot 1`] = `
+<div
+  id="root0"
+>
+  <div
+    class="flex flex-col"
+  >
+    <span
+      class="mb-2 text-blueGray-800 px-4"
+    >
+      2. Choose your channel
+    </span>
+    
+    <div
+      class="px-4 py-2 channel font-semibold text-sm channel--active"
+    >
+      <span
+        class="h-10 flex items-center cursor-pointer"
+      >
+         General Channel 
+      </span>
+    </div>
+    <div
+      class="px-4 py-2 channel font-semibold text-sm"
+    >
+      <span
+        class="h-10 flex items-center cursor-pointer"
+      >
+         Technology Channel 
+      </span>
+    </div>
+    <div
+      class="px-4 py-2 channel font-semibold text-sm"
+    >
+      <span
+        class="h-10 flex items-center cursor-pointer"
+      >
+         LGTM Channel 
+      </span>
+    </div>
+  </div>
+</div>
+`;

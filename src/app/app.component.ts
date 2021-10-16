@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  OnInit,
+} from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
 import { APP_TITLE } from './core';
@@ -17,7 +22,10 @@ import { APP_TITLE } from './core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit {
-  constructor(@Inject(APP_TITLE) public appTitle: string, private titleService: Title) {}
+  constructor(
+    @Inject(APP_TITLE) public appTitle: string,
+    private titleService: Title,
+  ) {}
 
   ngOnInit() {
     this.titleService.setTitle(this.appTitle);

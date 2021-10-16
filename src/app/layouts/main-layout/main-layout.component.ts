@@ -8,7 +8,7 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
         <section>
           <ng-content select="[heading]"></ng-content>
         </section>
-        <div class="flex-grow">
+        <div class="flex-grow flex flex-col">
           <ng-content select="[content]"></ng-content>
         </div>
       </div>

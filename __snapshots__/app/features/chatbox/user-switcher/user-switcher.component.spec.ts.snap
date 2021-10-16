@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserSwitcherComponent should match snapshot 1`] = `
+<div
+  id="root0"
+>
+  <div
+    class="flex flex-col px-4"
+  >
+    <label
+      class="mb-2 text-blueGray-800"
+      for="user"
+    >
+      1. Choose your user
+    </label>
+    <select
+      class="p-2 rounded ng-untouched ng-pristine ng-valid"
+      id="user"
+    >
+      
+      <option
+        value="Joyse"
+      >
+        Joyse
+      </option>
+      <option
+        value="Sam"
+      >
+        Sam
+      </option>
+      <option
+        value="Russell"
+      >
+        Russell
+      </option>
+    </select>
+  </div>
+</div>
+`;
