@@ -9,7 +9,7 @@ exports[`MainLayoutComponent should match snapshot 1`] = `
       class="bg-white min-h-screen flex flex-col"
     >
       <div
-        class="py-4 max-w-6xl w-full mx-auto flex-grow flex flex-col"
+        class="py-4 max-w-6xl w-full mx-auto"
       >
         <section>
           <h1
@@ -19,7 +19,8 @@ exports[`MainLayoutComponent should match snapshot 1`] = `
           </h1>
         </section>
         <div
-          class="flex-grow flex flex-col"
+          class="flex flex-col"
+          style="height: calc(100vh - 32px - 76px);"
         >
           <div
             content=""

@@ -30,5 +30,9 @@ export class AppModule {
     this.svgIconRegistryService
       .loadSvg('assets/icons/arrow-up.svg', 'arrow-up')
       ?.subscribe();
+
+    this.svgIconRegistryService
+      .loadSvg('assets/icons/check-circle.svg', 'check-circle')
+      ?.subscribe();
   }
 }

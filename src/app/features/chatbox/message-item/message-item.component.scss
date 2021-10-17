@@ -1,0 +1,57 @@
+.message-item {
+  @apply flex;
+  @apply pt-4;
+  @apply pb-6;
+  @apply relative;
+
+  .user-avatar {
+    @apply bg-teal-300;
+    @apply rounded-full;
+    @apply w-12;
+    @apply h-12;
+    @apply flex;
+    @apply justify-center;
+    @apply items-center;
+  }
+
+  .message-container {
+    @apply whitespace-pre-line;
+    @apply rounded;
+    @apply bg-white;
+    @apply p-2;
+    @apply relative;
+  
+    &::before {
+      content: '';
+      @apply absolute;
+      @apply w-6;
+      @apply h-6;
+      @apply top-3;
+      border: 0.75rem solid;
+      border-color: transparent;
+    }
+  }
+
+  &--left {
+    .message-container {
+      @apply ml-4;
+      &::before {
+        border-right-color: white;
+        @apply -left-6;
+      }
+    }
+  }
+
+  &--right {
+    @apply flex-row-reverse;
+
+    .message-container {
+      @apply mr-4;
+      @apply text-right;
+      &::before {
+        border-left-color: white;
+        @apply -right-6;
+      }
+    }
+  }
+}

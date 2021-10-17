@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MessagesComponent should match snapshot 1`] = `
+<div
+  id="root0"
+>
+  <div
+    class="flex flex-col"
+  >
+    
+    <app-message-item />
+    <app-message-item />
+    <app-message-item />
+    <app-message-item />
+    <app-message-item />
+    <app-message-item />
+    <app-message-item />
+    <app-message-item />
+    <app-message-item />
+  </div>
+</div>
+`;

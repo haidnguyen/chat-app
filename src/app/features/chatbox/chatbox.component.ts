@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
   selector: 'app-chatbox',
   template: `
     <div
-      class="bg-blueGray-100 flex-grow grid grid-cols-12 rounded-lg"
+      class="bg-blueGray-100 grid grid-cols-12 rounded-lg h-full"
       *ngIf="vm$ | async as vm"
     >
       <div
@@ -27,14 +27,16 @@ import { map } from 'rxjs/operators';
           ></app-channel-switcher>
         </div>
       </div>
-      <div class="col-span-9 md:col-span-8 flex flex-col">
+      <div class="col-span-9 md:col-span-8 flex flex-col h-full overflow-auto">
         <div class="border-b border-solid border-blueGray-200 p-5">
           {{ vm.currentChannel }}
         </div>
-        <div class="p-4 flex-grow">
-          <button app-button primary icon="arrow-up">Read More</button>
+        <div class="p-4 overflow-auto">
+          <app-messages></app-messages>
         </div>
-        <div class="p-4 h-32">Chat Form</div>
+        <div class="p-4 h-32 border-t border-solid border-blueGray-200">
+          Chat Form
+        </div>
       </div>
     </div>
   `,
@@ -42,7 +44,7 @@ import { map } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChatboxComponent {
-  @HostBinding('class') classes = 'flex flex-col flex-grow';
+  @HostBinding('class') classes = 'h-full';
 
   readonly $currentUser = new BehaviorSubject('Sam');
   readonly $currentChannel = new BehaviorSubject('General Channel');
