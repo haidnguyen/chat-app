@@ -1,6 +1,7 @@
 import { Component, ChangeDetectionStrategy, HostBinding } from '@angular/core';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { MessagesComponent } from './messages/messages.component';
 
 @Component({
   selector: 'app-chatbox',
@@ -32,10 +33,12 @@ import { map } from 'rxjs/operators';
           {{ vm.currentChannel }}
         </div>
         <div class="p-4 overflow-auto">
-          <app-messages></app-messages>
+          <app-messages [data]="messages"></app-messages>
         </div>
-        <div class="p-4 h-32 border-t border-solid border-blueGray-200">
-          Chat Form
+        <div class="p-4 border-t border-solid border-blueGray-200">
+          <app-message-form
+            (messageSubmit)="onMessageSubmit($event)"
+          ></app-message-form>
         </div>
       </div>
     </div>
@@ -65,4 +68,56 @@ export class ChatboxComponent {
   onChannelSwitch(channel: string) {
     this.$currentChannel.next(channel);
   }
+
+  onMessageSubmit(message: string) {
+    console.log({ message });
+  }
+
+  messages: MessagesComponent['data'] = [
+    {
+      user: 'Russell',
+      text: "Hello, I'm Russell.\nHow can I help you today?",
+      datetime: '08:55',
+    },
+    {
+      user: 'Joyse',
+      text: 'Hi, Russell\nIneed more information about Developer Plan.',
+      datetime: '08:55',
+    },
+    {
+      user: 'Same',
+      text: 'Are we meeting today?\nProject has been already finished and I have result to show you.',
+      datetime: '08:55',
+    },
+    {
+      user: 'Joyse',
+      text: 'Well I am not sure.\nI have results to show you.',
+      datetime: '08:55',
+    },
+    {
+      user: 'Joyse',
+      text: 'Hey, can you receive my chat?',
+      datetime: '08:55',
+    },
+    {
+      user: 'Joyse',
+      text: 'Well I am not sure.\nI have results to show you.\n Another Line\nAnother Line',
+      datetime: '08:55',
+    },
+    {
+      user: 'Joyse',
+      text: 'Hey, can you receive my chat?',
+      datetime: '08:55',
+    },
+    {
+      user: 'Joyse',
+      text: 'Well I am not sure.\nI have results to show you.',
+      datetime: '08:55',
+    },
+    {
+      user: 'Joyse',
+      text: 'Hey, can you receive my chat?',
+      datetime: '08:55',
+    },
+  ];
 }

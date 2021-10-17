@@ -34,5 +34,9 @@ export class AppModule {
     this.svgIconRegistryService
       .loadSvg('assets/icons/check-circle.svg', 'check-circle')
       ?.subscribe();
+
+    this.svgIconRegistryService
+      .loadSvg('assets/icons/paper-airplane.svg', 'paper-airplane')
+      ?.subscribe();
   }
 }

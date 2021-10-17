@@ -10,6 +10,7 @@ import { ChatboxComponent } from './chatbox.component';
 import { UserSwitcherComponent } from './user-switcher/user-switcher.component';
 import { MessagesComponent } from './messages/messages.component';
 import { MessageItemComponent } from './message-item/message-item.component';
+import { MessageFormComponent } from './message-form/message-form.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { MessageItemComponent } from './message-item/message-item.component';
     ChannelSwitcherComponent,
     MessagesComponent,
     MessageItemComponent,
+    MessageFormComponent,
   ],
   imports: [
     CommonModule,
