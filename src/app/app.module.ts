@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
+import { AngularSvgIconModule, SvgIconRegistryService } from 'angular-svg-icon';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -8,8 +10,25 @@ import { MainLayoutModule } from './layouts/main-layout';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, CoreModule, MainLayoutModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    CoreModule,
+    MainLayoutModule,
+    HttpClientModule,
+    AngularSvgIconModule.forRoot(),
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private svgIconRegistryService: SvgIconRegistryService) {
+    this.svgIconRegistryService
+      .loadSvg('assets/icons/arrow-down.svg', 'arrow-down')
+      ?.subscribe();
+
+    this.svgIconRegistryService
+      .loadSvg('assets/icons/arrow-up.svg', 'arrow-up')
+      ?.subscribe();
+  }
+}

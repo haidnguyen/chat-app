@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ButtonModule } from '@app/shared/button';
 
+import { ChannelSwitcherComponent } from './channel-switcher/channel-switcher.component';
 import { ChatBoxRoutingModule } from './chatbox-routing.module';
 import { ChatboxComponent } from './chatbox.component';
 import { UserSwitcherComponent } from './user-switcher/user-switcher.component';
-import { ChannelSwitcherComponent } from './channel-switcher/channel-switcher.component';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,11 @@ import { ChannelSwitcherComponent } from './channel-switcher/channel-switcher.co
     UserSwitcherComponent,
     ChannelSwitcherComponent,
   ],
-  imports: [CommonModule, ChatBoxRoutingModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    ChatBoxRoutingModule,
+    ReactiveFormsModule,
+    ButtonModule,
+  ],
 })
 export class ChatboxModule {}

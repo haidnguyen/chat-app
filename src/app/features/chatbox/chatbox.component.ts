@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
       *ngIf="vm$ | async as vm"
     >
       <div
-        class="sm:col-span-3 col-span-4 border-r border-solid border-blueGray-200 py-4"
+        class="col-span-3 md:col-span-4 border-r border-solid border-blueGray-200 py-4"
       >
         <div class="mb-4">
           <app-user-switcher
@@ -27,8 +27,14 @@ import { map } from 'rxjs/operators';
           ></app-channel-switcher>
         </div>
       </div>
-      <div class="sm:col-span-9 col-span-8 px-2">
-        {{ vm.currentChannel }}
+      <div class="col-span-9 md:col-span-8 flex flex-col">
+        <div class="border-b border-solid border-blueGray-200 p-5">
+          {{ vm.currentChannel }}
+        </div>
+        <div class="p-4 flex-grow">
+          <button app-button primary icon="arrow-up">Read More</button>
+        </div>
+        <div class="p-4 h-32">Chat Form</div>
       </div>
     </div>
   `,
