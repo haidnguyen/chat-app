@@ -12,11 +12,6 @@ exports[`MessagesComponent should match snapshot 1`] = `
     <app-message-item />
     <app-message-item />
     <app-message-item />
-    <app-message-item />
-    <app-message-item />
-    <app-message-item />
-    <app-message-item />
-    <app-message-item />
   </div>
 </div>
 `;

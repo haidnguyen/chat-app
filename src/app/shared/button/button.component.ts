@@ -42,7 +42,6 @@ export class ButtonComponent {
   @Input() icon: string | null = null;
   @Input()
   set primary(value: any) {
-    console.log({ value, c: coerceBooleanProperty(value) });
     if (coerceBooleanProperty(value)) {
       this.classes = this.classes.concat(' app-button--primary');
     } else {

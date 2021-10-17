@@ -4,7 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: 'chatbox',
-    loadChildren: () => import('@app/features/chatbox').then(module => module.ChatboxModule),
+    loadChildren: () =>
+      import('@app/features/chatbox').then(module => module.ChatboxModule),
   },
   {
     path: '',

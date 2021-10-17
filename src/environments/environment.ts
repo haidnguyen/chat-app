@@ -4,6 +4,9 @@
 
 export const environment = {
   production: false,
+  GRAPHQL_ENDPOINT:
+    'https://angular-test-backend-yc4c5cvnnq-an.a.run.app/graphql',
+  APP_TITLE: '1 Day Chat App',
 };
 
 /*

@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule, Optional, SkipSelf } from '@angular/core';
+import { environment } from '@environments/environment';
 
-import { APP_TITLE } from './app-token';
+import { APP_GRAPHQL_ENDPOINT, APP_TITLE } from './app-token';
 
 @NgModule({
   declarations: [],
@@ -9,7 +10,11 @@ import { APP_TITLE } from './app-token';
   providers: [
     {
       provide: APP_TITLE,
-      useValue: '1 Day Chat App',
+      useValue: environment.APP_TITLE,
+    },
+    {
+      provide: APP_GRAPHQL_ENDPOINT,
+      useValue: environment.GRAPHQL_ENDPOINT,
     },
   ],
 })

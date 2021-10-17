@@ -1,5 +1,5 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
-import { MessageItemComponent } from '../message-item/message-item.component';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Message } from '@app/models/message';
 
 @Component({
   selector: 'app-messages',
@@ -17,5 +17,5 @@ import { MessageItemComponent } from '../message-item/message-item.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MessagesComponent {
-  @Input() data: MessageItemComponent['data'][] | null = null;
+  @Input() data: Message[] | null = null;
 }

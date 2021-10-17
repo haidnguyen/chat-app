@@ -1,11 +1,6 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
-
-interface Data {
-  text: string;
-  user: string;
-  datetime: string;
-}
+import { Message } from '@app/models/message';
 
 @Component({
   selector: 'app-message-item',
@@ -17,10 +12,10 @@ interface Data {
     >
       <div class="flex flex-col">
         <div class="user-avatar">
-          {{ data.user[0] }}
+          {{ data.userId[0] }}
         </div>
         <div class="font-light text-xs text-center text-gray-500">
-          {{ data.user }}
+          {{ data.userId }}
         </div>
       </div>
       <div class="message-container">
@@ -29,7 +24,7 @@ interface Data {
       <span
         class="absolute text-xs font-extralight text-gray-600 bottom-0 mx-16 flex items-center"
       >
-        {{ data.datetime }}
+        {{ data.datetime | date: 'HH:mm' }}
         <svg-icon
           *ngIf="right"
           name="check-circle"
@@ -46,7 +41,7 @@ export class MessageItemComponent {
   private _left: boolean = false;
   private _right: boolean = false;
 
-  @Input() data: Data | null = null;
+  @Input() data: Message | null = null;
   @Input()
   get left() {
     return this._left;

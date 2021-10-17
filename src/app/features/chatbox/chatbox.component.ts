@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, HostBinding } from '@angular/core';
+import { MessageService } from '@app/services/message.service';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { MessagesComponent } from './messages/messages.component';
 
 @Component({
   selector: 'app-chatbox',
@@ -33,7 +33,7 @@ import { MessagesComponent } from './messages/messages.component';
           {{ vm.currentChannel }}
         </div>
         <div class="p-4 overflow-auto">
-          <app-messages [data]="messages"></app-messages>
+          <app-messages [data]="vm.messages"></app-messages>
         </div>
         <div class="p-4 border-t border-solid border-blueGray-200">
           <app-message-form
@@ -47,17 +47,25 @@ import { MessagesComponent } from './messages/messages.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChatboxComponent {
+  constructor(private messageService: MessageService) {}
   @HostBinding('class') classes = 'h-full';
 
   readonly $currentUser = new BehaviorSubject('Sam');
   readonly $currentChannel = new BehaviorSubject('General Channel');
 
-  vm$ = combineLatest([this.$currentChannel, this.$currentUser]).pipe(
-    map(([currentChannel, currentUser]) => ({
+  vm$ = combineLatest([
+    this.$currentChannel,
+    this.$currentUser,
+    this.messageService
+      .getLatestMessages('1')
+      .pipe(map(response => response.data.fetchLatestMessages)),
+  ]).pipe(
+    map(([currentChannel, currentUser, messages]) => ({
       currentChannel,
       currentUser,
       users: ['Joyse', 'Sam', 'Russell'],
       channels: ['General Channel', 'Technology Channel', 'LGTM Channel'],
+      messages,
     })),
   );
 
@@ -70,54 +78,7 @@ export class ChatboxComponent {
   }
 
   onMessageSubmit(message: string) {
+    this.messageService.getLatestMessages('1').subscribe(console.log);
     console.log({ message });
   }
-
-  messages: MessagesComponent['data'] = [
-    {
-      user: 'Russell',
-      text: "Hello, I'm Russell.\nHow can I help you today?",
-      datetime: '08:55',
-    },
-    {
-      user: 'Joyse',
-      text: 'Hi, Russell\nIneed more information about Developer Plan.',
-      datetime: '08:55',
-    },
-    {
-      user: 'Same',
-      text: 'Are we meeting today?\nProject has been already finished and I have result to show you.',
-      datetime: '08:55',
-    },
-    {
-      user: 'Joyse',
-      text: 'Well I am not sure.\nI have results to show you.',
-      datetime: '08:55',
-    },
-    {
-      user: 'Joyse',
-      text: 'Hey, can you receive my chat?',
-      datetime: '08:55',
-    },
-    {
-      user: 'Joyse',
-      text: 'Well I am not sure.\nI have results to show you.\n Another Line\nAnother Line',
-      datetime: '08:55',
-    },
-    {
-      user: 'Joyse',
-      text: 'Hey, can you receive my chat?',
-      datetime: '08:55',
-    },
-    {
-      user: 'Joyse',
-      text: 'Well I am not sure.\nI have results to show you.',
-      datetime: '08:55',
-    },
-    {
-      user: 'Joyse',
-      text: 'Hey, can you receive my chat?',
-      datetime: '08:55',
-    },
-  ];
 }
