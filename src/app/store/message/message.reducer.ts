@@ -33,7 +33,7 @@ const _messageReducer = createReducer(
     }),
   ),
   on(doFetchLatestMessagesFulfilled, (state, { type, messages }) =>
-    adapter.addMany(
+    adapter.setAll(
       messages,
       update(state, {
         loadingActions: except(type),

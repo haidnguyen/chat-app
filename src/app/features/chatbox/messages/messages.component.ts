@@ -6,10 +6,10 @@ import { Message } from '@app/models/message';
   template: `
     <div class="flex flex-col">
       <app-message-item
-        *ngFor="let message of data; let odd = odd; let even = even"
+        *ngFor="let message of data"
         [data]="message"
-        [left]="even"
-        [right]="odd"
+        [left]="currentUser !== message.userId"
+        [right]="currentUser === message.userId"
       ></app-message-item>
     </div>
   `,
@@ -18,4 +18,5 @@ import { Message } from '@app/models/message';
 })
 export class MessagesComponent {
   @Input() data: Message[] | null = null;
+  @Input() currentUser: string | null = null;
 }

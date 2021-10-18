@@ -5,6 +5,7 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
+import { Channel } from '@app/models/channel';
 
 @Component({
   selector: 'app-channel-switcher',
@@ -15,12 +16,12 @@ import {
         *ngFor="let channel of channels"
         class="px-4 py-2 channel font-semibold text-sm"
         [ngClass]="{
-          'channel--active': currentChannel === channel
+          'channel--active': currentChannel?.id === channel.id
         }"
         (click)="channelSwitch.next(channel)"
       >
         <span class="h-10 flex items-center cursor-pointer">
-          {{ channel }}
+          {{ channel.name }}
         </span>
       </div>
     </div>
@@ -44,9 +45,9 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChannelSwitcherComponent {
-  private _currentChannel: string | null = null;
+  private _currentChannel: Channel | null = null;
 
-  @Input() channels: string[] | null = null;
+  @Input() channels: Channel[] | null = null;
   @Input()
   get currentChannel() {
     return this._currentChannel;
@@ -55,5 +56,5 @@ export class ChannelSwitcherComponent {
     this._currentChannel = value;
   }
 
-  @Output() channelSwitch = new EventEmitter<string>();
+  @Output() channelSwitch = new EventEmitter<Channel>();
 }
