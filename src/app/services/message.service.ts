@@ -4,6 +4,8 @@ import { APP_GRAPHQL_ENDPOINT } from '@app/core';
 import { GraphResponse } from '@app/models/graph-response';
 import { Message } from '@app/models/message';
 import { gql } from '@app/utils/gql';
+import { of, throwError } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 type GetLatestMessagesResponse = GraphResponse<{
   fetchLatestMessages: Message[];
@@ -16,6 +18,21 @@ const query = gql`
       text
       userId
       datetime
+    }
+  }
+`;
+
+type SendMessageReponse = GraphResponse<{
+  postMessage: Message;
+}>;
+
+const sendMessageQuery = gql`
+  mutation sendMessage($channelId: String!, $text: String!, $userId: String!) {
+    postMessage(channelId: $channelId, text: $text, userId: $userId) {
+      messageId
+      datetime
+      userId
+      text
     }
   }
 `;
@@ -34,5 +51,21 @@ export class MessageService {
       this.url,
       query({ channel }),
     );
+  }
+
+  sendMessage(message: string, userId: string, channelId: string) {
+    return this.http
+      .post<SendMessageReponse>(
+        this.url,
+        sendMessageQuery({ channelId, text: message, userId }),
+      )
+      .pipe(
+        switchMap(response => {
+          if (response.errors) {
+            return throwError('Can not send message');
+          }
+          return of(response);
+        }),
+      );
   }
 }

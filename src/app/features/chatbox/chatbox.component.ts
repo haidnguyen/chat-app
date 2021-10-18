@@ -3,14 +3,8 @@ import {
   Component,
   HostBinding,
   OnDestroy,
-  OnInit,
 } from '@angular/core';
 import { Channel } from '@app/models/channel';
-import { MessageService } from '@app/services/message.service';
-import { AppState, fromMessage } from '@app/store';
-import { Store } from '@ngrx/store';
-import { BehaviorSubject, combineLatest, Subject } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
 
 import { ChatboxStore } from './chatbox.store';
 
@@ -61,60 +55,15 @@ import { ChatboxStore } from './chatbox.store';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ChatboxStore],
 })
-export class ChatboxComponent implements OnInit, OnDestroy {
-  constructor(
-    private messageService: MessageService,
-    private store: Store<AppState>,
-    private chatboxStore: ChatboxStore,
-  ) {}
+export class ChatboxComponent implements OnDestroy {
+  constructor(private chatboxStore: ChatboxStore) {}
 
   @HostBinding('class') classes = 'h-full';
 
-  private readonly isLoading$ = this.store.select(fromMessage.selectIsLoading);
-  private readonly messages$ = this.store.select(fromMessage.selectAllMessages);
-  private readonly $destroy = new Subject<void>();
-  readonly $currentUser = new BehaviorSubject('Sam');
-
-  vm$ = combineLatest([
-    this.isLoading$,
-    this.chatboxStore.currentChannel$,
-    this.chatboxStore.currentUser$,
-    this.chatboxStore.channels$,
-    this.chatboxStore.users$,
-    this.messages$,
-  ]).pipe(
-    map(
-      ([
-        isLoading,
-        currentChannel,
-        currentUser,
-        channels,
-        users,
-        messages,
-      ]) => ({
-        isLoading,
-        currentChannel,
-        currentUser,
-        users,
-        channels,
-        messages,
-      }),
-    ),
-  );
-
-  ngOnInit() {
-    this.chatboxStore.currentChannel$
-      .pipe(takeUntil(this.$destroy))
-      .subscribe(channel =>
-        this.store.dispatch(
-          fromMessage.doFetchLatestMessages({ channelId: channel.id }),
-        ),
-      );
-  }
+  readonly vm$ = this.chatboxStore.vm$;
 
   ngOnDestroy() {
-    this.$destroy.next();
-    this.$destroy.complete();
+    this.chatboxStore.dispose();
   }
 
   onUserSwitch(user: string) {
