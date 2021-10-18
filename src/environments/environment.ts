@@ -2,11 +2,24 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+
 export const environment = {
   production: false,
   GRAPHQL_ENDPOINT:
     'https://angular-test-backend-yc4c5cvnnq-an.a.run.app/graphql',
   APP_TITLE: '1 Day Chat App',
+  storeInstrument: [
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: false,
+      features: {
+        pause: false,
+        lock: true,
+        persist: true,
+      },
+    }),
+  ],
 };
 
 /*

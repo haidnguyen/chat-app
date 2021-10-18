@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core';
 import { MainLayoutModule } from './layouts/main-layout';
+import { AppStoreModule } from './store';
 
 @NgModule({
   declarations: [AppComponent],
@@ -17,6 +18,7 @@ import { MainLayoutModule } from './layouts/main-layout';
     MainLayoutModule,
     HttpClientModule,
     AngularSvgIconModule.forRoot(),
+    AppStoreModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
