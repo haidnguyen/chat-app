@@ -40,5 +40,9 @@ export class AppModule {
     this.svgIconRegistryService
       .loadSvg('assets/icons/paper-airplane.svg', 'paper-airplane')
       ?.subscribe();
+
+    this.svgIconRegistryService
+      .loadSvg('assets/icons/x-circle.svg', 'x-circle')
+      ?.subscribe();
   }
 }

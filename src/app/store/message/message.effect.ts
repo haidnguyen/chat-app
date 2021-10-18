@@ -45,17 +45,19 @@ export class MessageEffect {
   sendMessageEffect$ = createEffect(() =>
     this.action$.pipe(
       ofType(doSendMessage),
-      exhaustMap(({ text, channelId, userId }) =>
+      exhaustMap(({ text, channelId, userId, temporaryMessageId }) =>
         this.messageService.sendMessage(text, userId, channelId).pipe(
           map(response =>
             doSendMessageFulfilled({
               message: response.data.postMessage,
+              temporaryMessageId,
             }),
           ),
           catchError((error: string) =>
             of(
               doSendMessageRejected({
                 error,
+                unsentMessageId: temporaryMessageId,
               }),
             ),
           ),

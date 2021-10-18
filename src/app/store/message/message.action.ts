@@ -18,15 +18,20 @@ export const doFetchLatestMessagesRejected = createAction(
 
 export const doSendMessage = createAction(
   '@@Message/SEND_MESSAGE',
-  props<{ text: string; userId: string; channelId: string }>(),
+  props<{
+    text: string;
+    userId: string;
+    channelId: string;
+    temporaryMessageId: string;
+  }>(),
 );
 
 export const doSendMessageFulfilled = createAction(
   '@@Message/SEND_MESSAGE_FULFILLED',
-  props<{ message: Message }>(),
+  props<{ message: Message; temporaryMessageId: string }>(),
 );
 
 export const doSendMessageRejected = createAction(
   '@@Message/SEND_MESSAGE_REJECTED',
-  props<{ error: string }>(),
+  props<{ error: string; unsentMessageId: string }>(),
 );

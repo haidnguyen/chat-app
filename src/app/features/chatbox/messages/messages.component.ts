@@ -6,10 +6,11 @@ import { Message } from '@app/models/message';
   template: `
     <div class="flex flex-col">
       <app-message-item
-        *ngFor="let message of data"
+        *ngFor="let message of data; let last = last"
         [data]="message"
         [left]="currentUser !== message.userId"
         [right]="currentUser === message.userId"
+        [last]="last"
       ></app-message-item>
     </div>
   `,

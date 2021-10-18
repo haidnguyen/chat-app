@@ -43,6 +43,7 @@ export class MessageFormComponent implements OnInit, OnDestroy {
   constructor(
     @Inject(APP_LOCAL_STORAGE_PERSIST_DEBOUNCE_TIME) private duration: number,
   ) {}
+
   form = new FormControl();
   readonly $submitClick = new Subject<void>();
   private readonly $destroy = new Subject<void>();

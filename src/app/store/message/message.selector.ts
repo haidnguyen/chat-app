@@ -9,3 +9,7 @@ export const selectIsLoading = createSelector(
   state => state.loadingActions.length > 0,
 );
 export const selectAllMessages = createSelector(selectMessageState, selectAll);
+export const selectUnsentMessageIds = createSelector(
+  selectMessageState,
+  state => state.unsentMessageIds,
+);

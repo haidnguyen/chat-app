@@ -5,7 +5,7 @@ import { ComponentStore } from '@ngrx/component-store';
 import { Store } from '@ngrx/store';
 import update from 'immutability-helper';
 import { Observable, Subject } from 'rxjs';
-import { takeUntil, tap, withLatestFrom } from 'rxjs/operators';
+import { map, takeUntil, tap, withLatestFrom } from 'rxjs/operators';
 
 export interface ChatboxState {
   currentUser: string;
@@ -50,6 +50,9 @@ export class ChatboxStore extends ComponentStore<ChatboxState> {
   readonly channels$ = this.select(state => state.channels);
   readonly isLoading$ = this.store.select(fromMessage.selectIsLoading);
   readonly messages$ = this.store.select(fromMessage.selectAllMessages);
+  readonly unsentMessageIds$ = this.store.select(
+    fromMessage.selectUnsentMessageIds,
+  );
 
   readonly vm$ = this.select(
     this.isLoading$,
@@ -67,6 +70,11 @@ export class ChatboxStore extends ComponentStore<ChatboxState> {
       users,
     }),
   );
+
+  readonly isMessageUnsent = (messageId: string) =>
+    this.unsentMessageIds$.pipe(
+      map(unsentMessageIds => unsentMessageIds.includes(messageId)),
+    );
 
   readonly switchChannel = this.updater((state, channel: Channel) => {
     localStorage.setItem('currentChannel', JSON.stringify(channel));
@@ -91,6 +99,7 @@ export class ChatboxStore extends ComponentStore<ChatboxState> {
             text: message,
             userId: currentUser,
             channelId: currentChannel.id,
+            temporaryMessageId: Date.now().toString(),
           }),
         );
       }),

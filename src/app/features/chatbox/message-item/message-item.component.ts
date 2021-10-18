@@ -1,6 +1,9 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { Message } from '@app/models/message';
+import { ChatboxStore } from '../chatbox.store';
+import { of, ReplaySubject } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-message-item',
@@ -25,12 +28,15 @@ import { Message } from '@app/models/message';
         class="absolute text-xs font-extralight text-gray-600 bottom-0 mx-16 flex items-center"
       >
         {{ data.datetime | date: 'HH:mm' }}
-        <svg-icon
-          *ngIf="right"
-          name="check-circle"
-          [applyClass]="true"
-          class="w-4 h-4 text-green-600"
-        ></svg-icon>
+        <ng-container *ngIf="vm$ | async as vm">
+          <svg-icon
+            *ngIf="(right && vm.isUnsent) || last"
+            [name]="vm.iconName"
+            [applyClass]="true"
+            class="w-4 h-4"
+            [ngClass]="vm.iconClass"
+          ></svg-icon>
+        </ng-container>
       </span>
     </div>
   `,
@@ -38,10 +44,45 @@ import { Message } from '@app/models/message';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MessageItemComponent {
+  constructor(private chatboxStore: ChatboxStore) {}
+
   private _left: boolean = false;
   private _right: boolean = false;
+  private _data: Message | null = null;
+  private _messageId$ = new ReplaySubject<string | undefined>(1);
 
-  @Input() data: Message | null = null;
+  readonly vm$ = this._messageId$.pipe(
+    switchMap(messageId =>
+      messageId
+        ? this.chatboxStore.isMessageUnsent(messageId).pipe(
+            map(isUnsent => ({
+              isUnsent,
+              iconName: isUnsent ? 'x-circle' : 'check-circle',
+              iconClass: {
+                'text-red-600': isUnsent,
+                'text-green-600': !isUnsent,
+              },
+            })),
+          )
+        : of({
+            isUnsent: false,
+            iconName: 'check-circle',
+            iconClass: {
+              'text-green-600': true,
+            },
+          }),
+    ),
+  );
+
+  @Input() last: boolean = false;
+  @Input()
+  get data() {
+    return this._data;
+  }
+  set data(value: Message | null) {
+    this._data = value;
+    this._messageId$.next(value?.messageId);
+  }
   @Input()
   get left() {
     return this._left;

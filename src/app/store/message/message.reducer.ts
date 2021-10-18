@@ -18,6 +18,7 @@ import {
 export interface MessageState extends EntityState<Message> {
   loadingActions: string[];
   errorMessage: string | null;
+  unsentMessageIds: string[];
 }
 
 export const FEATURE_KEY = 'message';
@@ -33,6 +34,7 @@ export const initialState: MessageState = adapter.getInitialState({
   loadingActions: [],
   errorMessage: null,
   lastSendMessageId: null,
+  unsentMessageIds: [],
 });
 
 const _messageReducer = createReducer(
@@ -51,30 +53,39 @@ const _messageReducer = createReducer(
       }),
     ),
   ),
-  on(doFetchLatestMessagesRejected, (state, { error, type }) =>
+  on(doFetchLatestMessagesRejected, (state, { error }) =>
     update(state, {
       loadingActions: except(doFetchLatestMessages.type),
       errorMessage: { $set: error },
     }),
   ),
-  on(doSendMessage, (state, { type }) =>
-    update(state, {
-      loadingActions: { $push: [type] },
-      errorMessage: { $set: null },
-    }),
-  ),
-  on(doSendMessageFulfilled, (state, { message }) =>
+  on(doSendMessage, (state, { type, text, userId, temporaryMessageId }) =>
     adapter.addOne(
-      message,
+      {
+        userId,
+        text,
+        datetime: new Date().toISOString(),
+        messageId: temporaryMessageId,
+      },
+      update(state, {
+        loadingActions: { $push: [type] },
+        errorMessage: { $set: null },
+      }),
+    ),
+  ),
+  on(doSendMessageFulfilled, (state, { message, temporaryMessageId }) =>
+    adapter.map(
+      entity => (entity.messageId === temporaryMessageId ? message : entity),
       update(state, {
         loadingActions: except(doSendMessage.type),
       }),
     ),
   ),
-  on(doSendMessageRejected, (state, { error }) =>
+  on(doSendMessageRejected, (state, { error, unsentMessageId }) =>
     update(state, {
       loadingActions: except(doSendMessage.type),
       errorMessage: { $set: error },
+      unsentMessageIds: { $push: [unsentMessageId] },
     }),
   ),
 );
