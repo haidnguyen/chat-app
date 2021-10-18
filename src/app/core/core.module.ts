@@ -2,7 +2,11 @@ import { CommonModule } from '@angular/common';
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { environment } from '@environments/environment';
 
-import { APP_GRAPHQL_ENDPOINT, APP_TITLE } from './app-token';
+import {
+  APP_GRAPHQL_ENDPOINT,
+  APP_TITLE,
+  APP_LOCAL_STORAGE_PERSIST_DEBOUNCE_TIME,
+} from './app-token';
 
 @NgModule({
   declarations: [],
@@ -15,6 +19,10 @@ import { APP_GRAPHQL_ENDPOINT, APP_TITLE } from './app-token';
     {
       provide: APP_GRAPHQL_ENDPOINT,
       useValue: environment.GRAPHQL_ENDPOINT,
+    },
+    {
+      provide: APP_LOCAL_STORAGE_PERSIST_DEBOUNCE_TIME,
+      useValue: environment.APP_LOCAL_STORAGE_PERSIST_DEBOUNCE_TIME,
     },
   ],
 })

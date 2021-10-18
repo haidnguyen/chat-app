@@ -22,7 +22,7 @@ import { MessageModule } from './message';
       },
     ),
     EffectsModule.forRoot(),
-    environment.storeInstrument,
+    environment.STORE_INSTRUMENT,
     MessageModule,
   ],
 })

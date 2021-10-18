@@ -9,7 +9,7 @@ export const environment = {
   GRAPHQL_ENDPOINT:
     'https://angular-test-backend-yc4c5cvnnq-an.a.run.app/graphql',
   APP_TITLE: '1 Day Chat App',
-  storeInstrument: [
+  STORE_INSTRUMENT: [
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: false,
@@ -20,6 +20,7 @@ export const environment = {
       },
     }),
   ],
+  APP_LOCAL_STORAGE_PERSIST_DEBOUNCE_TIME: 200,
 };
 
 /*
