@@ -10,6 +10,7 @@ import {
   doFetchLatestMessagesRejected,
   doFetchMoreMessages,
   doFetchMoreMessagesFulfilled,
+  doFetchMoreMessagesRejected,
   doSendMessage,
   doSendMessageFulfilled,
   doSendMessageRejected,
@@ -103,7 +104,7 @@ const _messageReducer = createReducer(
       }),
     ),
   ),
-  on(doFetchLatestMessagesRejected, (state, { error }) =>
+  on(doFetchMoreMessagesRejected, (state, { error }) =>
     update(state, {
       loadingActions: except(doFetchLatestMessages.type),
       errorMessage: { $set: error },

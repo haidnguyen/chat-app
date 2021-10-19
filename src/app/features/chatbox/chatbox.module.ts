@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from '@app/shared/button';
-import { IncludesPipeModule } from '@app/shared/includes-pipe/includes-pipe.module';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 
 import { ChannelSwitcherComponent } from './channel-switcher/channel-switcher.component';
@@ -28,7 +27,6 @@ import { UserSwitcherComponent } from './user-switcher/user-switcher.component';
     ReactiveFormsModule,
     ButtonModule,
     AngularSvgIconModule,
-    IncludesPipeModule,
   ],
 })
 export class ChatboxModule {}

@@ -5,8 +5,24 @@ describe(ChannelSwitcherComponent.name, () => {
   it('should match snapshot', async () => {
     const component = await render(ChannelSwitcherComponent, {
       componentProperties: {
-        channels: ['General Channel', 'Technology Channel', 'LGTM Channel'],
-        currentChannel: 'General Channel',
+        channels: [
+          {
+            id: '1',
+            name: 'General Channel',
+          },
+          {
+            id: '2',
+            name: 'Technology Channel',
+          },
+          {
+            id: '3',
+            name: 'LGTM Channel',
+          },
+        ],
+        currentChannel: {
+          id: '1',
+          name: 'General Channel',
+        },
       },
     });
 

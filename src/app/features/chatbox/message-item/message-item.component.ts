@@ -15,7 +15,7 @@ import { map, switchMap } from 'rxjs/operators';
     >
       <div class="flex flex-col">
         <div class="user-avatar">
-          {{ data.userId[0] }}
+          {{ data.userId[0] | uppercase }}
         </div>
         <div class="font-light text-xs text-center text-gray-500">
           {{ data.userId }}
@@ -35,6 +35,7 @@ import { map, switchMap } from 'rxjs/operators';
             [applyClass]="true"
             class="w-4 h-4"
             [ngClass]="vm.iconClass"
+            data-testid="status-icon"
           ></svg-icon>
         </ng-container>
       </span>

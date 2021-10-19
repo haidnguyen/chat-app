@@ -5,5 +5,37 @@ exports[`MessageItemComponent should match snapshot 1`] = `
   id="root0"
 >
   
+  <div
+    class="message-item message-item--left"
+  >
+    <div
+      class="flex flex-col"
+    >
+      <div
+        class="user-avatar"
+      >
+         J 
+      </div>
+      <div
+        class="font-light text-xs text-center text-gray-500"
+      >
+         Joyse 
+      </div>
+    </div>
+    <div
+      class="message-container"
+    >
+       Test Message Item 
+    </div>
+    <span
+      class="absolute text-xs font-extralight text-gray-600 bottom-0 mx-16 flex items-center"
+    >
+       16:50 
+      
+      
+      
+      
+    </span>
+  </div>
 </div>
 `;
