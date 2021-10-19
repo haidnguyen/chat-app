@@ -1,18 +1,23 @@
 import { Injectable } from '@angular/core';
 import { Channel } from '@app/models/channel';
+import { Message } from '@app/models/message';
 import { AppState, fromMessage } from '@app/store';
 import { ComponentStore } from '@ngrx/component-store';
 import { Store } from '@ngrx/store';
 import update from 'immutability-helper';
+import { last, head } from 'ramda';
 import { Observable, Subject } from 'rxjs';
 import { map, takeUntil, tap, withLatestFrom } from 'rxjs/operators';
 
-export interface ChatboxState {
+interface ChatboxState {
   currentUser: string;
   users: string[];
   channels: Channel[];
   currentChannel: Channel;
 }
+
+const bySentMessages = (unsentMessageIds: string[]) => (message: Message) =>
+  !unsentMessageIds.includes(message.messageId);
 
 @Injectable()
 export class ChatboxStore extends ComponentStore<ChatboxState> {
@@ -102,6 +107,46 @@ export class ChatboxStore extends ComponentStore<ChatboxState> {
             temporaryMessageId: Date.now().toString(),
           }),
         );
+      }),
+    ),
+  );
+
+  readonly loadMoreMessage = this.effect((type$: Observable<'PRE' | 'NEW'>) =>
+    type$.pipe(
+      withLatestFrom(
+        this.messages$,
+        this.unsentMessageIds$,
+        this.currentChannel$,
+      ),
+      tap(([type, messages, unsentMessageIds, currentChannel]) => {
+        if (type === 'NEW') {
+          const lastSendMessage = last(
+            messages.filter(bySentMessages(unsentMessageIds)),
+          );
+          if (lastSendMessage) {
+            this.store.dispatch(
+              fromMessage.doFetchMoreMessages({
+                channelId: currentChannel.id,
+                messageId: lastSendMessage.messageId,
+                old: false,
+              }),
+            );
+          }
+        }
+        if (type === 'PRE') {
+          const firstMessage = head(
+            messages.filter(bySentMessages(unsentMessageIds)),
+          );
+          if (firstMessage) {
+            this.store.dispatch(
+              fromMessage.doFetchMoreMessages({
+                channelId: currentChannel.id,
+                messageId: firstMessage.messageId,
+                old: true,
+              }),
+            );
+          }
+        }
       }),
     ),
   );

@@ -3,16 +3,16 @@ import { except } from '@app/utils/array';
 import { createEntityAdapter, EntityState } from '@ngrx/entity';
 import { Action, createReducer, on } from '@ngrx/store';
 import update from 'immutability-helper';
-import {
-  doFetchLatestMessagesRejected,
-  doSendMessage,
-  doSendMessageFulfilled,
-  doSendMessageRejected,
-} from '.';
 
 import {
   doFetchLatestMessages,
   doFetchLatestMessagesFulfilled,
+  doFetchLatestMessagesRejected,
+  doFetchMoreMessages,
+  doFetchMoreMessagesFulfilled,
+  doSendMessage,
+  doSendMessageFulfilled,
+  doSendMessageRejected,
 } from './message.action';
 
 export interface MessageState extends EntityState<Message> {
@@ -86,6 +86,27 @@ const _messageReducer = createReducer(
       loadingActions: except(doSendMessage.type),
       errorMessage: { $set: error },
       unsentMessageIds: { $push: [unsentMessageId] },
+    }),
+  ),
+
+  on(doFetchMoreMessages, (state, { type }) =>
+    update(state, {
+      loadingActions: { $push: [type] },
+      errorMessage: { $set: null },
+    }),
+  ),
+  on(doFetchMoreMessagesFulfilled, (state, { messages }) =>
+    adapter.addMany(
+      messages,
+      update(state, {
+        loadingActions: except(doFetchMoreMessages.type),
+      }),
+    ),
+  ),
+  on(doFetchLatestMessagesRejected, (state, { error }) =>
+    update(state, {
+      loadingActions: except(doFetchLatestMessages.type),
+      errorMessage: { $set: error },
     }),
   ),
 );

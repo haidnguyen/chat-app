@@ -8,6 +8,9 @@ import {
   doFetchLatestMessages,
   doFetchLatestMessagesFulfilled,
   doFetchLatestMessagesRejected,
+  doFetchMoreMessages,
+  doFetchMoreMessagesFulfilled,
+  doFetchMoreMessagesRejected,
   doSendMessage,
   doSendMessageFulfilled,
   doSendMessageRejected,
@@ -60,6 +63,24 @@ export class MessageEffect {
                 unsentMessageId: temporaryMessageId,
               }),
             ),
+          ),
+        ),
+      ),
+    ),
+  );
+
+  fetchMoreMessagesEffect$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(doFetchMoreMessages),
+      switchMap(({ channelId, messageId, old }) =>
+        this.messageService.getMoreMessage(channelId, messageId, old).pipe(
+          map(response =>
+            doFetchMoreMessagesFulfilled({
+              messages: response.data.fetchMoreMessages,
+            }),
+          ),
+          catchError((error: string) =>
+            of(doFetchMoreMessagesRejected({ error })),
           ),
         ),
       ),

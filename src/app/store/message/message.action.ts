@@ -35,3 +35,18 @@ export const doSendMessageRejected = createAction(
   '@@Message/SEND_MESSAGE_REJECTED',
   props<{ error: string; unsentMessageId: string }>(),
 );
+
+export const doFetchMoreMessages = createAction(
+  '@@Message/FETCH_MORE_MESSAGES',
+  props<{ channelId: string; messageId: string; old: boolean }>(),
+);
+
+export const doFetchMoreMessagesFulfilled = createAction(
+  '@@Message/FETCH_MORE_MESSAGE_FULFILLED',
+  props<{ messages: Message[] }>(),
+);
+
+export const doFetchMoreMessagesRejected = createAction(
+  '@@Message/FETCH_MORE_MESSAGE_REJECTED',
+  props<{ error: string }>(),
+);

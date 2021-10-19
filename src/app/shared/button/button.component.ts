@@ -10,15 +10,26 @@ import { coerceBooleanProperty } from '@angular/cdk/coercion';
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: '[app-button]',
   template: `
-    <div class="flex items-center">
-      <ng-content></ng-content>
+    <ng-container *ngIf="iconOnly; else normalButton">
       <svg-icon
         *ngIf="icon"
         [name]="icon"
-        class="h-5 w-5 pl-1"
+        class="h-5 w-5"
         [applyClass]="true"
       ></svg-icon>
-    </div>
+    </ng-container>
+
+    <ng-template #normalButton>
+      <div class="flex items-center w-full">
+        <ng-content></ng-content>
+        <svg-icon
+          *ngIf="icon"
+          [name]="icon"
+          class="h-5 w-5 pl-1"
+          [applyClass]="true"
+        ></svg-icon>
+      </div>
+    </ng-template>
   `,
   styles: [
     `
@@ -37,9 +48,26 @@ import { coerceBooleanProperty } from '@angular/cdk/coercion';
   encapsulation: ViewEncapsulation.None,
 })
 export class ButtonComponent {
+  private _iconOnly: boolean = false;
   @HostBinding('class') classes = 'inline-block py-2 px-4 rounded';
 
   @Input() icon: string | null = null;
+  @Input()
+  get iconOnly() {
+    return this._iconOnly;
+  }
+  set iconOnly(value: any) {
+    const isIconOnly = coerceBooleanProperty(value);
+    if (isIconOnly) {
+      this.classes = this.classes.replace(
+        'py-2 px-4 rounded',
+        'p-2 rounded-full',
+      );
+      this._iconOnly = true;
+    } else {
+      this._iconOnly = false;
+    }
+  }
   @Input()
   set primary(value: any) {
     if (coerceBooleanProperty(value)) {

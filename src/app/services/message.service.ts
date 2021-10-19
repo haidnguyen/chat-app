@@ -37,6 +37,25 @@ const sendMessageQuery = gql`
   }
 `;
 
+type GetMoreMessageResponse = GraphResponse<{
+  fetchMoreMessages: Message[];
+}>;
+
+const getMoreMessageQuery = gql`
+  query getMoreMessage(
+    $channelId: String!
+    $messageId: String!
+    $old: Boolean!
+  ) {
+    fetchMoreMessages(channelId: $channelId, messageId: $messageId, old: $old) {
+      messageId
+      datetime
+      userId
+      text
+    }
+  }
+`;
+
 @Injectable({
   providedIn: 'root',
 })
@@ -67,5 +86,12 @@ export class MessageService {
           return of(response);
         }),
       );
+  }
+
+  getMoreMessage(channelId: string, messageId: string, old: boolean) {
+    return this.http.post<GetMoreMessageResponse>(
+      this.url,
+      getMoreMessageQuery({ channelId, messageId, old }),
+    );
   }
 }

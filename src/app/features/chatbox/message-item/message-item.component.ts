@@ -30,7 +30,7 @@ import { map, switchMap } from 'rxjs/operators';
         {{ data.datetime | date: 'HH:mm' }}
         <ng-container *ngIf="vm$ | async as vm">
           <svg-icon
-            *ngIf="(right && vm.isUnsent) || last"
+            *ngIf="(right && last) || vm.isUnsent"
             [name]="vm.iconName"
             [applyClass]="true"
             class="w-4 h-4"

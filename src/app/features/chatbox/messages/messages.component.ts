@@ -4,14 +4,16 @@ import { Message } from '@app/models/message';
 @Component({
   selector: 'app-messages',
   template: `
-    <div class="flex flex-col">
-      <app-message-item
-        *ngFor="let message of data; let last = last"
-        [data]="message"
-        [left]="currentUser !== message.userId"
-        [right]="currentUser === message.userId"
-        [last]="last"
-      ></app-message-item>
+    <div class="grid grid-cols-11">
+      <div class="flex flex-col col-span-10">
+        <app-message-item
+          *ngFor="let message of data; let last = last"
+          [data]="message"
+          [left]="currentUser !== message.userId"
+          [right]="currentUser === message.userId"
+          [last]="last"
+        ></app-message-item>
+      </div>
     </div>
   `,
   styles: [],
