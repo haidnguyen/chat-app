@@ -5,6 +5,7 @@ import {
   OnInit,
   OnDestroy,
   Inject,
+  Input,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { APP_LOCAL_STORAGE_PERSIST_DEBOUNCE_TIME } from '@app/core';
@@ -47,6 +48,15 @@ export class MessageFormComponent implements OnInit, OnDestroy {
   form = new FormControl();
   readonly $submitClick = new Subject<void>();
   private readonly $destroy = new Subject<void>();
+
+  @Input()
+  set isLoading(value: boolean) {
+    if (value) {
+      this.form.disable({ emitEvent: false });
+    } else {
+      this.form.enable({ emitEvent: false });
+    }
+  }
 
   @Output() messageSubmit = this.$submitClick.pipe(
     withLatestFrom(this.form.valueChanges),

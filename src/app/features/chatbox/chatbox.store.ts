@@ -53,7 +53,9 @@ export class ChatboxStore extends ComponentStore<ChatboxState> {
   readonly currentChannel$ = this.select(state => state.currentChannel);
   readonly users$ = this.select(state => state.users);
   readonly channels$ = this.select(state => state.channels);
-  readonly isLoading$ = this.store.select(fromMessage.selectIsLoading);
+  readonly isLoading$ = this.store.select(
+    fromMessage.selectIsFetchingLatestMessage,
+  );
   readonly messages$ = this.store.select(fromMessage.selectAllMessages);
   readonly unsentMessageIds$ = this.store.select(
     fromMessage.selectUnsentMessageIds,

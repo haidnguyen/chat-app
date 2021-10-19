@@ -37,6 +37,7 @@ import { ChatboxStore } from './chatbox.store';
         <div class="border-b border-solid border-blueGray-200 p-5 relative">
           {{ vm.currentChannel.name }}
           <button
+            *ngIf="!vm.isLoading"
             app-button
             primary
             iconOnly
@@ -49,10 +50,12 @@ import { ChatboxStore } from './chatbox.store';
           <app-messages
             [data]="vm.messages"
             [currentUser]="vm.currentUser"
+            [isLoading]="vm.isLoading"
           ></app-messages>
         </div>
         <div class="p-4 border-t border-solid border-blueGray-200 relative">
           <button
+            *ngIf="!vm.isLoading"
             app-button
             primary
             iconOnly
@@ -63,6 +66,7 @@ import { ChatboxStore } from './chatbox.store';
 
           <app-message-form
             (messageSubmit)="onMessageSubmit($event)"
+            [isLoading]="vm.isLoading"
           ></app-message-form>
         </div>
       </div>

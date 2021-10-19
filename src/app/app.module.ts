@@ -44,5 +44,9 @@ export class AppModule {
     this.svgIconRegistryService
       .loadSvg('assets/icons/x-circle.svg', 'x-circle')
       ?.subscribe();
+
+    this.svgIconRegistryService
+      .loadSvg('assets/icons/refresh.svg', 'refresh')
+      ?.subscribe();
   }
 }
