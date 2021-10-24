@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { Message } from '@app/models/message';
 import { ChatboxStore } from '../chatbox.store';
-import { of, ReplaySubject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
 @Component({
@@ -50,28 +50,20 @@ export class MessageItemComponent {
   private _left: boolean = false;
   private _right: boolean = false;
   private _data: Message | null = null;
-  private _messageId$ = new ReplaySubject<string | undefined>(1);
+  private _messageId$ = new ReplaySubject<string>(1);
 
   readonly vm$ = this._messageId$.pipe(
     switchMap(messageId =>
-      messageId
-        ? this.chatboxStore.isMessageUnsent(messageId).pipe(
-            map(isUnsent => ({
-              isUnsent,
-              iconName: isUnsent ? 'x-circle' : 'check-circle',
-              iconClass: {
-                'text-red-600': isUnsent,
-                'text-green-600': !isUnsent,
-              },
-            })),
-          )
-        : of({
-            isUnsent: false,
-            iconName: 'check-circle',
-            iconClass: {
-              'text-green-600': true,
-            },
-          }),
+      this.chatboxStore.isMessageUnsent(messageId).pipe(
+        map(isUnsent => ({
+          isUnsent,
+          iconName: isUnsent ? 'x-circle' : 'check-circle',
+          iconClass: {
+            'text-red-600': isUnsent,
+            'text-green-600': !isUnsent,
+          },
+        })),
+      ),
     ),
   );
 
@@ -82,7 +74,10 @@ export class MessageItemComponent {
   }
   set data(value: Message | null) {
     this._data = value;
-    this._messageId$.next(value?.messageId);
+    /* istanbul ignore else */
+    if (value) {
+      this._messageId$.next(value.messageId);
+    }
   }
   @Input()
   get left() {

@@ -6,7 +6,7 @@ exports[`MessageItemComponent should match snapshot 1`] = `
 >
   
   <div
-    class="message-item message-item--left"
+    class="message-item message-item--left message-item--right"
   >
     <div
       class="flex flex-col"
@@ -34,6 +34,10 @@ exports[`MessageItemComponent should match snapshot 1`] = `
       
       
       
+      <svg-icon
+        class="w-4 h-4 text-green-600"
+        data-testid="status-icon"
+      />
       
     </span>
   </div>
