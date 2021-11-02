@@ -125,6 +125,7 @@ export class ChatboxStore extends ComponentStore<ChatboxState> {
           const lastSendMessage = last(
             messages.filter(bySentMessages(unsentMessageIds)),
           );
+          /* istanbul ignore else */
           if (lastSendMessage) {
             this.store.dispatch(
               fromMessage.doFetchMoreMessages({
@@ -139,6 +140,7 @@ export class ChatboxStore extends ComponentStore<ChatboxState> {
           const firstMessage = head(
             messages.filter(bySentMessages(unsentMessageIds)),
           );
+          /* istanbul ignore else */
           if (firstMessage) {
             this.store.dispatch(
               fromMessage.doFetchMoreMessages({

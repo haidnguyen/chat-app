@@ -23,13 +23,16 @@ describe(MessageItemComponent.name, () => {
     right: false,
   };
 
-  const renderComponent = (props: Partial<MessageItemComponentProps> = {}) =>
+  const renderComponent = (
+    props: Partial<MessageItemComponentProps> = {},
+    isMessageUnsent = false,
+  ) =>
     render(MessageItemComponent, {
       providers: [
         {
           provide: ChatboxStore,
           useValue: {
-            isMessageUnsent: jest.fn().mockReturnValue(of(false)),
+            isMessageUnsent: jest.fn().mockReturnValue(of(isMessageUnsent)),
           },
         },
       ],
@@ -38,7 +41,10 @@ describe(MessageItemComponent.name, () => {
     });
 
   it('should match snapshot', async () => {
-    const component = await renderComponent();
+    const component = await renderComponent({
+      right: true,
+      last: true,
+    });
 
     expect(component.container).toMatchSnapshot();
   });
@@ -70,5 +76,17 @@ describe(MessageItemComponent.name, () => {
     });
 
     expect(queryByTestId('status-icon')).toBeInTheDocument();
+  });
+
+  it('should render send failure icon', async () => {
+    const { queryByTestId } = await renderComponent(
+      { right: true, last: true },
+      true,
+    );
+
+    expect(queryByTestId('status-icon')).toHaveAttribute(
+      'class',
+      'w-4 h-4 text-red-600',
+    );
   });
 });
