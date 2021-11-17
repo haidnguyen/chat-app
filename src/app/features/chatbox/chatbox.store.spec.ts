@@ -1,5 +1,8 @@
 import { inject, TestBed } from '@angular/core/testing';
-import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
+import {
+  BrowserDynamicTestingModule,
+  platformBrowserDynamicTesting,
+} from '@angular/platform-browser-dynamic/testing';
 import { AppState } from '@app/store';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { cold, hot } from 'jest-marbles';
@@ -11,7 +14,7 @@ describe('Chatbox Store', () => {
     TestBed.initTestEnvironment(
       BrowserDynamicTestingModule,
       platformBrowserDynamicTesting(),
-  );
+    );
 
     TestBed.configureTestingModule({
       providers: [
@@ -35,7 +38,7 @@ describe('Chatbox Store', () => {
           },
         }),
       ],
-      teardown: { destroyAfterEach: false }
+      teardown: { destroyAfterEach: false },
     });
   });
 
