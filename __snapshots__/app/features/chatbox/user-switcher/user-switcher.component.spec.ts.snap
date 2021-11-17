@@ -17,7 +17,6 @@ exports[`UserSwitcherComponent should match snapshot 1`] = `
       class="p-2 rounded ng-untouched ng-pristine ng-valid"
       id="user"
     >
-      
       <option
         value="Joyse"
       >
@@ -33,6 +32,7 @@ exports[`UserSwitcherComponent should match snapshot 1`] = `
       >
         Russell
       </option>
+      
     </select>
   </div>
 </div>

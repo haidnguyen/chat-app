@@ -21,6 +21,7 @@ exports[`AppComponent should match snapshot 1`] = `
     <router-outlet
       content=""
     />
+    
   </app-main-layout>
 </div>
 `;

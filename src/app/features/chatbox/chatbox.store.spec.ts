@@ -1,11 +1,18 @@
 import { inject, TestBed } from '@angular/core/testing';
+import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
 import { AppState } from '@app/store';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { cold } from 'jest-marbles';
+import { cold, hot } from 'jest-marbles';
 import { ChatboxStore } from './chatbox.store';
 
 describe('Chatbox Store', () => {
   beforeEach(() => {
+    TestBed.resetTestEnvironment();
+    TestBed.initTestEnvironment(
+      BrowserDynamicTestingModule,
+      platformBrowserDynamicTesting(),
+  );
+
     TestBed.configureTestingModule({
       providers: [
         ChatboxStore,
@@ -28,6 +35,7 @@ describe('Chatbox Store', () => {
           },
         }),
       ],
+      teardown: { destroyAfterEach: false }
     });
   });
 
@@ -42,7 +50,7 @@ describe('Chatbox Store', () => {
     [ChatboxStore],
     (chatboxStore: ChatboxStore) => {
       expect(chatboxStore.vm$).toBeObservable(
-        cold('a', {
+        hot('a', {
           a: {
             isLoading: false,
             messages: [
