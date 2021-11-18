@@ -1,7 +1,8 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
 import { AngularSvgIconModule, SvgIconRegistryService } from 'angular-svg-icon';
+import { forkJoin, Observable } from 'rxjs';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,28 +26,21 @@ import { AppStoreModule } from './store';
 })
 export class AppModule {
   constructor(private svgIconRegistryService: SvgIconRegistryService) {
-    this.svgIconRegistryService
-      .loadSvg('assets/icons/arrow-down.svg', 'arrow-down')
-      ?.subscribe();
+    this.loadSvg(
+      ['assets/icons/arrow-down.svg', 'arrow-down'],
+      ['assets/icons/arrow-up.svg', 'arrow-up'],
+      ['assets/icons/check-circle.svg', 'check-circle'],
+      ['assets/icons/paper-airplane.svg', 'paper-airplane'],
+      ['assets/icons/x-circle.svg', 'x-circle'],
+      ['assets/icons/refresh.svg', 'refresh'],
+    );
+  }
 
-    this.svgIconRegistryService
-      .loadSvg('assets/icons/arrow-up.svg', 'arrow-up')
-      ?.subscribe();
-
-    this.svgIconRegistryService
-      .loadSvg('assets/icons/check-circle.svg', 'check-circle')
-      ?.subscribe();
-
-    this.svgIconRegistryService
-      .loadSvg('assets/icons/paper-airplane.svg', 'paper-airplane')
-      ?.subscribe();
-
-    this.svgIconRegistryService
-      .loadSvg('assets/icons/x-circle.svg', 'x-circle')
-      ?.subscribe();
-
-    this.svgIconRegistryService
-      .loadSvg('assets/icons/refresh.svg', 'refresh')
-      ?.subscribe();
+  loadSvg(...pairs: Array<[url: string, name: string]>) {
+    forkJoin(
+      pairs
+        .map(([url, name]) => this.svgIconRegistryService.loadSvg(url, name))
+        .filter(Boolean) as Observable<SVGElement>[],
+    ).subscribe();
   }
 }
